@@ -17,15 +17,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
-
   <groupId>com.squareup</groupId>
   <artifactId>otto-parent</artifactId>
-  <version>1.3.4</version>
+  <version>1.3.4-1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Otto (Parent)</name>
@@ -34,7 +28,6 @@
 
   <modules>
     <module>library</module>
-    <module>sample</module>
   </modules>
 
   <properties>
@@ -53,10 +46,9 @@
   </properties>
 
   <scm>
-    <url>http://github.com/square/otto/</url>
-    <connection>scm:git:git://github.com/square/otto.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/square/otto.git</developerConnection>
-    <tag>1.3.4</tag>
+    <url>http://github.com/sierragolf/otto/</url>
+    <connection>scm:git:git://github.com/sierragolf/otto.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/sierragolf/otto.git</developerConnection>
   </scm>
 
   <issueManagement>
@@ -105,6 +97,13 @@
   </dependencyManagement>
 
   <build>
+    <extensions>
+      <extension>
+        <groupId>org.kuali.maven.wagons</groupId>
+        <artifactId>maven-s3-wagon</artifactId>
+        <version>1.2.1</version>
+      </extension>
+    </extensions>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -184,7 +183,24 @@
         <configuration>
           <autoVersionSubmodules>true</autoVersionSubmodules>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.scm</groupId>
+            <artifactId>maven-scm-provider-gitexe</artifactId>
+            <version>1.9</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>maven-s3-release-repo</id>
+      <url>s3://mvn-ecabo/snapshot</url>
+    </snapshotRepository>
+    <repository>
+      <id>maven-s3-snapshot-repo</id>
+      <url>s3://mvn-ecabo/release</url>
+    </repository>
+  </distributionManagement>
 </project>
